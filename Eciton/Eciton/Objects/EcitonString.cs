@@ -1,15 +1,12 @@
 ﻿namespace Eciton
 {
-    public class EcitonString : EcitonObject, IEcitonOut<EcitonString>
+    public class EcitonString : EcitonValue<string>
     {
-        public EcitonString(string value) { Value = value; }
-
-        public string Value { get; }
-
-        public EcitonString Send() => this;
-
-        public override string ToString() => Value;
+        public EcitonString(string val) : base(val)
+        {
+        }
 
         public static implicit operator string(EcitonString v) => v.Value;
+        public static implicit operator EcitonString(string v) => new EcitonString(v);
     }
 }

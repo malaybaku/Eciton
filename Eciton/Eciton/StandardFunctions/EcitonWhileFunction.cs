@@ -1,47 +1,21 @@
 ﻿namespace Eciton
 {
-    //public class EcitonWhileFunction : EcitonFunction
-    //{
-    //    public override bool IsArgumentCountFixed => true;
-    //    public override int ArgumentCount => 2;
+    public class EcitonWhileFunction : EcitonObject
+    {
+        public IEcitonIn<EcitonBool> Condition => _condition;
+        public IEcitonIn<object> Proc => _proc;
 
-    //    public override void Bind(int index, EcitonObject source)
-    //    {
-    //        if (source == null || index >= ArgumentCount) return;
+        private readonly EcitonFuncArgument<EcitonBool> _condition = new EcitonFuncArgument<EcitonBool>();
+        private readonly EcitonNullableIn<object> _proc = new EcitonNullableIn<object>(EcitonEmpty.Empty);
 
-    //        if (index == 0)
-    //        {
-    //            _condition = source;
-    //        }
-    //        else //if (index == 1)
-    //        {
-    //            _loopContent = source;
-    //        }
-    //    }
-
-    //    public IEcitonOut<EcitonBool> Condition { get; set; } = EcitonBool.False;
-    //    private EcitonObject _loopContent = EcitonEmpty.Empty;
-
-    //    public override EcitonObject Eval()
-    //    {
-    //        if (!(_condition is EcitonBool))
-    //        {
-    //            return EcitonEmpty.Empty;
-    //        }
-
-    //        EcitonObject result = EcitonEmpty.Empty;
-    //        while ((_condition as EcitonBool).Value)
-    //        {
-    //            EcitonObject current = _loopContent.Eval();
-    //            if (current == EcitonConst.Break)
-    //            {
-    //                break;
-    //            }
-
-    //            result = current;
-    //        }
-
-    //        return result;
-    //    }
-    //}
+        public override object Eval()
+        {
+            object result = EcitonEmpty.Empty;
+            while(_condition.PullArg())
+            {
+                result = _proc.GetValueOrDefault();
+            }
+            return result;
+        }
+    }
 }

@@ -42,12 +42,16 @@
   <ItemGroup>
     <Compile Include="Exceptions\EcitonCableNotAssignedException.cs" />
     <Compile Include="Exceptions\EcitonCableSourceNullException.cs" />
+    <Compile Include="Exceptions\EcitonDefaultInputNotInitializedException.cs" />
     <Compile Include="Exceptions\EcitonException.cs" />
     <Compile Include="Exceptions\EcitonVariableNotInitializedException.cs" />
     <Compile Include="Logics\EcitonBreak.cs" />
     <Compile Include="Logics\EcitonEmpty.cs" />
-    <Compile Include="Logics\EcitonVariable.cs" />
+    <Compile Include="Objects\EcitonReadOnlyValue.cs" />
+    <Compile Include="Objects\EcitonValue.cs" />
+    <Compile Include="Objects\EcitonVariable.cs" />
     <Compile Include="Objects\EcitonBool.cs" />
+    <Compile Include="Objects\EcitonFuncArgument.cs" />
     <Compile Include="Objects\EcitonFunction.cs" />
     <Compile Include="Objects\EcitonInt.cs" />
     <Compile Include="Objects\EcitonObject.cs" />
@@ -58,9 +62,11 @@
     <Compile Include="StandardFunctions\EcitonAssign.cs" />
     <Compile Include="StandardFunctions\EcitonForFunction.cs" />
     <Compile Include="StandardFunctions\EcitonIfFunction.cs" />
+    <Compile Include="StandardUtils\EcitonParallel.cs" />
     <Compile Include="StandardFunctions\EcitonRangeFunction.cs" />
     <Compile Include="StandardFunctions\EcitonWhileFunction.cs" />
     <Compile Include="StandardUtils\EcitonSequence.cs" />
+    <Compile Include="StandardUtils\EcitonTuple.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

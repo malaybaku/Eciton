@@ -9,8 +9,6 @@ namespace Eciton
 
         public EcitonInt Send() => this;
 
-        public override string ToString() => Value.ToString();
-
         public static implicit operator int(EcitonInt v) => v.Value;
     }
 }
