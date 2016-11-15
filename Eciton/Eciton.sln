@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eciton", "Eciton\Eciton.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcitonEditor", "EcitonEditor\EcitonEditor.csproj", "{93E3971D-4C61-45A1-B0C7-F57E3548526D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcitonConsoleSample", "EcitonConsoleSample\EcitonConsoleSample.csproj", "{3493CBCF-9218-4ED8-BB18-A32B2EE62AF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{93E3971D-4C61-45A1-B0C7-F57E3548526D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93E3971D-4C61-45A1-B0C7-F57E3548526D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93E3971D-4C61-45A1-B0C7-F57E3548526D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3493CBCF-9218-4ED8-BB18-A32B2EE62AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3493CBCF-9218-4ED8-BB18-A32B2EE62AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3493CBCF-9218-4ED8-BB18-A32B2EE62AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3493CBCF-9218-4ED8-BB18-A32B2EE62AF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

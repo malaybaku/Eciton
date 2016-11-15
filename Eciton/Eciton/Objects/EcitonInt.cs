@@ -1,14 +1,15 @@
-﻿using System;
+﻿using System.Runtime.Serialization;
 
 namespace Eciton
 {
-    public class EcitonInt : EcitonObject, IEcitonOut<EcitonInt>
+    [DataContract]
+    public class EcitonInt : EcitonValue<int>
     {
-        public EcitonInt(int value) { Value = value; }
-        public int Value { get; }
-
-        public EcitonInt Send() => this;
+        public EcitonInt(int val) : base(val)
+        {
+        }
 
         public static implicit operator int(EcitonInt v) => v.Value;
+        public static implicit operator EcitonInt(int v) => new EcitonInt(v);
     }
 }

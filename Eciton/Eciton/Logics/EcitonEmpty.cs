@@ -1,12 +1,23 @@
-﻿namespace Eciton
+﻿using System.Runtime.Serialization;
+
+namespace Eciton
 {
-    public class EcitonEmpty : EcitonObject
+    [DataContract]
+    public sealed class EcitonEmpty : EcitonObject, IEcitonOut<EcitonEmpty>, IEcitonOut<EcitonObject>, IEcitonOut<object>
     {
         private EcitonEmpty() { }
 
-        private static readonly EcitonEmpty _instance = new EcitonEmpty();
+        [IgnoreDataMember]
+        //NOTE: 無駄な生成に見えるかもしれないがDataContract的にこっちのほうが見通しがいい
+        public static EcitonEmpty Empty => new EcitonEmpty();
 
-        public static EcitonEmpty Empty => _instance;
+        EcitonEmpty IEcitonOut<EcitonEmpty>.Send() => this;
+        EcitonObject IEcitonOut<EcitonObject>.Send() => this;
+        object IEcitonOut<object>.Send() => this;
+
         public override object Eval() => Empty;
+
+        public override bool Equals(object obj) => (obj is EcitonEmpty);
+        public override int GetHashCode() => 0;
     }
 }

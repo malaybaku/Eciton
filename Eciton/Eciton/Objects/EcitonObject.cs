@@ -1,8 +1,9 @@
-﻿using System;
+﻿using System.Runtime.Serialization;
 
 namespace Eciton
 {
     /// <summary>プログラム内の要素として扱えるEcitonの値の基底型を表します。</summary>
+    [DataContract]
     public class EcitonObject
     {
         /// <summary>

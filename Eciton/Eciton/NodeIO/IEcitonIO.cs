@@ -14,21 +14,22 @@
     public interface IEcitonIn<T>
     {
         /// <summary>データ受信用の配線を接続します。</summary>
-        /// <param name="cable">データを送る線</param>
-        void Connect(IEcitonCable<T> cable);
+        /// <param name="source">データの送信元</param>
+        void Connect(IEcitonOut<T> source);
         /// <summary>データ受信用の配線を取り外します。</summary>
         void Disconnect();
     }
 
-    /// <summary>入出力を接続しデータを送信するケーブルを定義します。</summary>
-    /// <typeparam name="T">送信するデータ</typeparam>
-    public interface IEcitonCable<T>
+    /// <summary><see cref="IEcitonIn{T}"/>の使用者が、値を実際に使う時に参照するインターフェースです。</summary>
+    /// <typeparam name="T">データ内容</typeparam>
+    public interface IEcitonPullable<T>
     {
-        /// <summary>データを出力する送信元を取得します。</summary>
-        IEcitonOut<T> Source { get; }
-
-        /// <summary>データ入力を待つ受信先を取得します。</summary>
-        IEcitonIn<T> Target { get; }
+        /// <summary>必要になったデータを取得します。</summary>
+        /// <returns>送信元あるいはデフォルト値などのデータ</returns>
+        T Pull();
     }
 
+    public interface IEcitonInImpl<T> : IEcitonIn<T>, IEcitonPullable<T>
+    {
+    }
 }

@@ -1,24 +1,29 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Eciton
 {
-    /// <summary>値を手続き的に保持できるメモリを表します。</summary>
-    public class EcitonVariable<T> : EcitonObject
-        where T : EcitonObject
+    /// <summary>値を手続き的に保持できる変数を表します。</summary>
+    [DataContract]
+    public class EcitonVariable<T> : EcitonObject, IEcitonOut<T>, IEcitonReceive<T>
+       // where T : EcitonObject
     {
         public EcitonVariable()
         {
-            _getter = new EcitonVariableGetter<T>(this);
-            _setter = new EcitonVariableSetter<T>(this);
+            _content = default(T);
+            _isInitialized = false;
         }
 
         private T _content;
+        private bool _isInitialized = false;
 
+        /// <summary>現在格納している値を取得、設定します。</summary>
+        [IgnoreDataMember] //NOTE: 保持値はプログラム実行するまで初期状態のままなのでファイル保存は絶対に不要
         public T Value
         {
             get
             {
-                if (_content == null)
+                if (!_isInitialized)
                 {
                     throw new EcitonVariableNotInitializedException();
                 }
@@ -32,41 +37,15 @@ namespace Eciton
                     throw new ArgumentNullException();
                 }
                 _content = value;
+                _isInitialized = true;
             }
         }
 
-        private readonly EcitonVariableGetter<T> _getter;
-        private readonly EcitonVariableSetter<T> _setter;
-
-        public IEcitonOut<T> Getter => _getter;
-        public IEcitonOut<EcitonVariable<T>> Setter => _setter;
+        public T Send() => Value;
+        public void Receive(T data) => Value = data;
 
         public override object Eval() => Value;
 
-        class EcitonVariableGetter<U> : IEcitonOut<U>
-            where U : EcitonObject
-        {
-            public EcitonVariableGetter(EcitonVariable<U> source)
-            {
-                _source = source;
-            }
-            private readonly EcitonVariable<U> _source;
-
-            public U Send() => _source.Value;
-        }
-
-        class EcitonVariableSetter<U> : IEcitonOut<EcitonVariable<U>>
-            where U : EcitonObject
-        {
-            public EcitonVariableSetter(EcitonVariable<U> target)
-            {
-                _target = target;
-            }
-
-            private readonly EcitonVariable<U> _target;
-
-            public EcitonVariable<U> Send() => _target;
-        }
     }
 
 }

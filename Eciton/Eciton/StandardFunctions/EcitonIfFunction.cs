@@ -8,52 +8,50 @@ namespace Eciton
         public IEcitonIn<object> Then => _then;
         public IEcitonIn<object> Else => _else;
 
-        private readonly EcitonFuncArgument<bool> _condition = new EcitonFuncArgument<bool>();
-        private readonly EcitonNullableIn<object> _then = new EcitonNullableIn<object>(EcitonEmpty.Empty);
-        private readonly EcitonNullableIn<object> _else = new EcitonNullableIn<object>(EcitonEmpty.Empty);
+        private readonly IEcitonInImpl<bool> _condition 
+            = new EcitonIn<bool>();
+
+        private readonly IEcitonInImpl<object> _then
+            = new EcitonInWithDefault<object>(new EcitonIn<object>(), EcitonEmpty.Empty);
+
+        private readonly IEcitonInImpl<object> _else 
+            = new EcitonInWithDefault<object>(new EcitonIn<object>(), EcitonEmpty.Empty);
 
         public override object Eval()
-            => (_condition.PullArg()) ?
-            _then.GetValueOrDefault() :
-            _else.GetValueOrDefault();
+            => (_condition.Pull()) ? _then.Pull() : _else.Pull();
     }
 
-    public class EcitonNullableIn<T> : IEcitonIn<T>
+    public class EcitonInWithDefault<T> : IEcitonInImpl<T>
     {
-        public EcitonNullableIn(T defaultValue)
+        public EcitonInWithDefault(IEcitonInImpl<T> ecitonIn, IEcitonOut<T> defaultOut)
         {
-            _defaultValue = defaultValue;
+            _ecitonIn = ecitonIn;
         }
 
-        private T _defaultValue;
+        private readonly IEcitonInImpl<T> _ecitonIn;
 
-        private IEcitonCable<T> _cable;
+        private IEcitonInImpl<T> _defaultValue = new EcitonIn<T>();
+        public IEcitonIn<T> DefaultValue => _defaultValue;
 
-        public void Connect(IEcitonCable<T> cable)
+        private IEcitonOut<T> _source;
+
+        public void Connect(IEcitonOut<T> source)
         {
-            if (cable == null)
+            if (source == null)
             {
                 throw new ArgumentNullException();
             }
-            _cable = cable;
+            _source = source;
+            _ecitonIn.Connect(source);
         }
-
         public void Disconnect()
         {
-            _cable = null;
+            _source = null;
+            _ecitonIn.Disconnect();
         }
 
-        public T GetValueOrDefault()
-        {
-            if (_cable?.Source != null)
-            {
-                return _cable.Source.Send();
-            }
-            else
-            {
-                return _defaultValue;
-            }
-        }
+        public T Pull()
+            => (_source == null) ? _defaultValue.Pull() : _ecitonIn.Pull();
     }
     
 }

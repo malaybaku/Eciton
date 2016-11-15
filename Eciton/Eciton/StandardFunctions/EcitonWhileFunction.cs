@@ -5,15 +5,15 @@
         public IEcitonIn<EcitonBool> Condition => _condition;
         public IEcitonIn<object> Proc => _proc;
 
-        private readonly EcitonFuncArgument<EcitonBool> _condition = new EcitonFuncArgument<EcitonBool>();
-        private readonly EcitonNullableIn<object> _proc = new EcitonNullableIn<object>(EcitonEmpty.Empty);
+        private readonly EcitonIn<EcitonBool> _condition = new EcitonIn<EcitonBool>();
+        private readonly EcitonInWithDefault<object> _proc = new EcitonInWithDefault<object>(new EcitonIn<object>(), EcitonEmpty.Empty);
 
         public override object Eval()
         {
             object result = EcitonEmpty.Empty;
-            while(_condition.PullArg())
+            while(_condition.Pull())
             {
-                result = _proc.GetValueOrDefault();
+                result = _proc.Pull();
             }
             return result;
         }

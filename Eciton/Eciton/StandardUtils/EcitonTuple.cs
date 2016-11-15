@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Eciton
 {
+    [DataContract]
     public class EcitonTupleFunction<T1, T2> : EcitonFunc<T1, T2, Tuple<T1, T2>>
     {
-        public EcitonTupleFunction() 
-            : base((item1, item2) => Tuple.Create(item1, item2))
-        {
-        }
+        protected override Tuple<T1, T2> Implement(T1 arg1, T2 arg2)
+            => Tuple.Create(arg1, arg2);
     }
 
+    [DataContract]
     public class EcitonTupleFunction<T1, T2, T3> : EcitonFunc<T1, T2, T3, Tuple<T1, T2, T3>>
     {
-        public EcitonTupleFunction() 
-            : base((item1, item2, item3) => Tuple.Create(item1, item2, item3))
-        {
-        }
+        protected override Tuple<T1, T2, T3> Implement(T1 arg1, T2 arg2, T3 arg3)
+            => Tuple.Create(arg1, arg2, arg3); 
     }
 }

@@ -9,7 +9,7 @@
     {
         public IEcitonIn<T> Source => _source;
 
-        private EcitonFuncArgument<T> _source = new EcitonFuncArgument<T>();
+        private EcitonIn<T> _source = new EcitonIn<T>();
         private bool _isInitialized = false;
 
         private T _readonlyValue;
@@ -19,7 +19,7 @@
             {
                 if (!_isInitialized)
                 {
-                    _readonlyValue = _source.PullArg();
+                    _readonlyValue = _source.Pull();
                     _isInitialized = true;
                 }
                 return _readonlyValue;

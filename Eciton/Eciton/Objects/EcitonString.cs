@@ -1,5 +1,8 @@
-﻿namespace Eciton
+﻿using System.Runtime.Serialization;
+
+namespace Eciton
 {
+    [DataContract]
     public class EcitonString : EcitonValue<string>
     {
         public EcitonString(string val) : base(val)

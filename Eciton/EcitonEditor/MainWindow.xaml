@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EcitonEditor"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type={x:Type local:MainWindowViewModel}}"
         Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <local:MainWindowViewModel />
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="ファイル">
+                <MenuItem Header="開く" Command="{Binding OpenEcitonFileCommand}" />
+                <MenuItem Header="保存" Command="{Binding SaveEcitonFileCommand}"/>
+                <MenuItem Header="終了" Command="{Binding QuitEcitonEditorCommand}"/>
+            </MenuItem>
+        </Menu>
+        <Canvas Grid.Row="1">
+            
+        </Canvas>
     </Grid>
 </Window>
