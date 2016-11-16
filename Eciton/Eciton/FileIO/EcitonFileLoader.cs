@@ -6,12 +6,12 @@ namespace Eciton.IO
     /// <summary>EcitonのプログラムをJSONファイルからロードするクラスを表します。</summary>
     public class EcitonFileLoader
     {
-        public object LoadFromXml(string fileName)
+        public EcitonObject LoadFromXml(string fileName)
         {
             var serializer = new NetDataContractSerializer();
             using (var sw = new StreamReader(fileName))
             {
-                return serializer.Deserialize(sw.BaseStream);
+                return serializer.Deserialize(sw.BaseStream) as EcitonObject;
             }
         }
     }

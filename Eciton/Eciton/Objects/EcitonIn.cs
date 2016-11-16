@@ -20,16 +20,15 @@ namespace Eciton
         {
             _source = null;
         }
+        public bool IsConnected => (_source != null);
 
         /// <summary>既定値あるいはケーブル接続先から入力値を取得します。</summary>
         /// <returns>入力値。入力が必須ではなく入力線が存在しない場合はあらかじめ設定した既定値を返します。</returns>
         public T Pull()
         {
             //必要な入力がない
-            if (_source == null)
-            {
-                throw new EcitonInNotAssignedException();
-            }
+            if (!IsConnected) throw new EcitonInNotAssignedException();
+
             return _source.Send();
         }
 

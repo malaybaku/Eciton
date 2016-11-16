@@ -18,18 +18,17 @@
         void Connect(IEcitonOut<T> source);
         /// <summary>データ受信用の配線を取り外します。</summary>
         void Disconnect();
+
+        /// <summary>出力に対して既に何かの端子が接続済みであるかを取得します。<summary>
+        bool IsConnected { get; }
     }
 
-    /// <summary><see cref="IEcitonIn{T}"/>の使用者が、値を実際に使う時に参照するインターフェースです。</summary>
+    /// <summary><see cref="IEcitonIn{T}"/>の使用者から見たインターフェースで、値の取得処理が追加で必要となります。</summary>
     /// <typeparam name="T">データ内容</typeparam>
-    public interface IEcitonPullable<T>
+    public interface IEcitonInImpl<T> : IEcitonIn<T>
     {
         /// <summary>必要になったデータを取得します。</summary>
         /// <returns>送信元あるいはデフォルト値などのデータ</returns>
         T Pull();
-    }
-
-    public interface IEcitonInImpl<T> : IEcitonIn<T>, IEcitonPullable<T>
-    {
     }
 }

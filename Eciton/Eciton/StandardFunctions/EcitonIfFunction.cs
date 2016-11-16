@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Eciton
 {
@@ -20,38 +21,30 @@ namespace Eciton
         public override object Eval()
             => (_condition.Pull()) ? _then.Pull() : _else.Pull();
     }
-
+    
+    [DataContract]
     public class EcitonInWithDefault<T> : IEcitonInImpl<T>
     {
         public EcitonInWithDefault(IEcitonInImpl<T> ecitonIn, IEcitonOut<T> defaultOut)
         {
+            if (ecitonIn == null || defaultOut == null) throw new ArgumentNullException();
+
             _ecitonIn = ecitonIn;
+            DefaultValue.Connect(defaultOut);
         }
 
+        [DataMember]
         private readonly IEcitonInImpl<T> _ecitonIn;
 
+        [DataMember]
         private IEcitonInImpl<T> _defaultValue = new EcitonIn<T>();
         public IEcitonIn<T> DefaultValue => _defaultValue;
 
-        private IEcitonOut<T> _source;
+        public void Connect(IEcitonOut<T> source) => _ecitonIn.Connect(source);
+        public void Disconnect() => _ecitonIn.Disconnect();
+        public bool IsConnected => _ecitonIn.IsConnected;
 
-        public void Connect(IEcitonOut<T> source)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException();
-            }
-            _source = source;
-            _ecitonIn.Connect(source);
-        }
-        public void Disconnect()
-        {
-            _source = null;
-            _ecitonIn.Disconnect();
-        }
-
-        public T Pull()
-            => (_source == null) ? _defaultValue.Pull() : _ecitonIn.Pull();
+        public T Pull() => (_ecitonIn.IsConnected) ? _ecitonIn.Pull() : _defaultValue.Pull();
     }
     
 }

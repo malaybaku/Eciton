@@ -52,6 +52,7 @@
     <Compile Include="Exceptions\EcitonVariableNotInitializedException.cs" />
     <Compile Include="Logics\EcitonBreak.cs" />
     <Compile Include="Logics\EcitonEmpty.cs" />
+    <Compile Include="NodeIO\EcitonOutAdapter.cs" />
     <Compile Include="Objects\EcitonReadOnlyValue.cs" />
     <Compile Include="Objects\EcitonValue.cs" />
     <Compile Include="Objects\EcitonVariable.cs" />
@@ -68,9 +69,11 @@
     <Compile Include="StandardFunctions\EcitonAssign.cs" />
     <Compile Include="FileIO\EcitonFileLoader.cs" />
     <Compile Include="FileIO\EcitonFileSaver.cs" />
+    <Compile Include="NodeIO\EcitonPushAdapter.cs" />
     <Compile Include="StandardFunctions\EcitonForFunction.cs" />
     <Compile Include="StandardFunctions\EcitonIfFunction.cs" />
     <Compile Include="StandardFunctions\EcitonSetter.cs" />
+    <Compile Include="StandardUtils\EcitonCustomObject.cs" />
     <Compile Include="StandardUtils\EcitonParallel.cs" />
     <Compile Include="StandardFunctions\EcitonRangeFunction.cs" />
     <Compile Include="StandardFunctions\EcitonWhileFunction.cs" />

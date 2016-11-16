@@ -10,14 +10,14 @@ namespace Eciton
         [DataMember]
         private readonly IEcitonInImpl<T> _source = new EcitonIn<T>();
         [DataMember]
-        private readonly IEcitonPushImpl<T> _setter = new EcitonPush<T>();
+        private readonly IEcitonPushImpl<T> _target = new EcitonPush<T>();
 
         public IEcitonIn<T> Source => _source;
-        public IEcitonPush<T> Setter => _setter;
+        public IEcitonPush<T> Target => _target;
 
         public override object Eval()
         {
-            _setter.Push(_source.Pull());
+            _target.Push(_source.Pull());
             //NOTE: いまは空値を返しているが、setした値を流す手もあることに注意(代入式の手口)
             return EcitonEmpty.Empty;
         }
