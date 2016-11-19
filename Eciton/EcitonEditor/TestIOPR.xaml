@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="EcitonEditor.TestIOPR"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EcitonEditor"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Viewbox>
+        <Grid Width="12" Height="12">
+            <Path Data="M0.5,0.5 L11.5,6 0.5,11.5 z" Fill="#FFF4F4F5" Margin="0" Stroke="Black"/>
+
+        </Grid>
+    </Viewbox>
+</UserControl>

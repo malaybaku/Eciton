@@ -10,6 +10,21 @@
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="Thumb" x:Key="NodeLikeThumbStyle">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border Width="60" Height="{Binding Width, RelativeSource={RelativeSource Self}}"
+                                BorderBrush="Black" BorderThickness="1"
+                                Background="Red">
+                            <TextBlock Text="Sample"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,8 +37,62 @@
                 <MenuItem Header="終了" Command="{Binding QuitEcitonEditorCommand}"/>
             </MenuItem>
         </Menu>
-        <Canvas Grid.Row="1">
-            
-        </Canvas>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding EcitonEdges}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- note: 色とか末端矢印とか超いじりたい -->
+                    <Path Stroke="Red" StrokeThickness="2">
+                        <Path.Data>
+                            <LineGeometry StartPoint="{Binding StartPos.Value}" EndPoint="{Binding EndPos.Value}"/>
+                        </Path.Data>
+                    </Path>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <!--<ItemsControl.Items>
+                <Path Stroke="Red" StrokeThickness="2">
+                    <Path.Data>
+                        <LineGeometry>
+                            <LineGeometry.StartPoint>
+                                <Point X="10" Y="20"/>
+                            </LineGeometry.StartPoint>
+                            <LineGeometry.EndPoint>
+                                <Point X="50" Y="100"/>
+                            </LineGeometry.EndPoint>
+                        </LineGeometry>
+                    </Path.Data>
+                </Path>
+            </ItemsControl.Items>-->
+        </ItemsControl>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding EcitonObjects}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X.Value}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Y.Value}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Thumb DragDelta="OnEcitonObjectDragDelta">
+                        <Thumb.Template>
+                            <ControlTemplate TargetType="Thumb">
+                                <Border Background="Black">
+                                    <local:EcitonObjectView />
+                                </Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

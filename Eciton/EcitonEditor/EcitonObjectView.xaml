@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="EcitonEditor.EcitonObjectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:e="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:local="clr-namespace:EcitonEditor"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type={x:Type local:EcitonObjectViewModel}}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="EcitonInItemTemplate">
+            <Path Data="M0.5,0.5 L3.5,0.5 3.5,5.5 8.5,5.5 8.5,0.5 11.5,0.5 11.5,11.5 0.5,11.5 z" Margin="1,0" Fill="White" Stroke="Black">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <e:CallMethodAction MethodName="SelectTerminal" TargetObject="{Binding}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Path>
+        </DataTemplate>
+        <DataTemplate x:Key="EcitonOutItemTemplate">
+            <Path Data="M0.5,0.5 L11.5,0.5 11.5,6 8.5,6 8.5,11 3.5,11 3.5,6 0.5,6 z" Margin="1,0" Fill="White" Stroke="Black">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <e:CallMethodAction MethodName="SelectTerminal" TargetObject="{Binding}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Path>
+        </DataTemplate>
+        <DataTemplate x:Key="EcitonReceiveItemTemplate">
+            <Path Data="M0.5,0.5 L11.5,0.5 11.5,11.5 0.5,11.5 7.5,6 z" Margin="0,1" Fill="White" Stroke="Black">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <e:CallMethodAction MethodName="SelectTerminal" TargetObject="{Binding}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Path>
+        </DataTemplate>
+        <DataTemplate x:Key="EcitonPushItemTemplate">
+            <Path Data="M0.5,0.5 4.5,0.5 L11.5,6 4.5,11.5 0.5,11.5 z" Margin="0,1" Fill="White" Stroke="Black">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <e:CallMethodAction MethodName="SelectTerminal" TargetObject="{Binding}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Path>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Viewbox>
+        <!-- TODO: Template for In/Out/Push/Receive terminals -->
+        <!-- NOTE: BG color is just for debug-->
+        <DockPanel Width="100" Height="100">
+            <!-- In -->
+            <Grid DockPanel.Dock="Top" Height="15" Background="Red" Margin="15,0">
+                <ItemsControl ItemsSource="{Binding EcitonIn}" ItemTemplate="{StaticResource EcitonInItemTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel IsItemsHost="True" Orientation="Horizontal"
+                                        VerticalAlignment="Bottom"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+            <!-- Out -->
+            <Grid DockPanel.Dock="Bottom" Height="15" Background="Blue" Margin="15,0">
+                <ItemsControl ItemsSource="{Binding EcitonOut}" ItemTemplate="{StaticResource EcitonOutItemTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel IsItemsHost="True" Orientation="Horizontal"
+                                        VerticalAlignment="Top"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+            <!-- Receive -->
+            <Grid DockPanel.Dock="Left" Width="15" Background="Green">
+                <ItemsControl ItemsSource="{Binding EcitonReceiver}" ItemTemplate="{StaticResource EcitonReceiveItemTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel IsItemsHost="True" Orientation="Vertical"
+                                        HorizontalAlignment="Right"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+            <!-- Push -->
+            <Grid DockPanel.Dock="Right" Width="15" Background="Yellow">
+                <ItemsControl ItemsSource="{Binding EcitonPush}" ItemTemplate="{StaticResource EcitonPushItemTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel IsItemsHost="True" Orientation="Vertical"
+                                        HorizontalAlignment="Left"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+            <Border Background="Gray">
+                <TextBlock TextAlignment="Center" Text="{Binding Name, Mode=OneWay}"/>
+            </Border>
+            <Rectangle Stroke="Black" StrokeThickness="1" Fill="Gray"/>
+        </DockPanel>
+    </Viewbox>
+</UserControl>
